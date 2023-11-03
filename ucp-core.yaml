@@ -12,7 +12,7 @@ spec:
     helm:
       releaseName: level1
       valuesObject:
-        targetRevision: main
+        targetRevision: foo
 
   destination:
     name: in-cluster
