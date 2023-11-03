@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: level2
+  namespace: argo-system
+spec:
+  destination:
+    name: in-cluster
+  project: ucp
+  source:
+    path: guestbook
+    repoURL: https://github.com/argoproj/argocd-example-apps
+    targetRevision: {{ .Values.targetRevision }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true

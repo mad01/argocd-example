@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: level1
+  namespace: argo-system
+spec:
+  destination:
+    name: in-cluster
+  project: ucp
+  source:
+    path: level2
+    repoURL: https://github.com/mad01/argocd-example
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      releaseName: level2
+      valuesObject:
+        targetRevision: {{ .Values.targetRevision }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
